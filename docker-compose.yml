@@ -1,0 +1,48 @@
+version: '3.2'
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - 8092:80
+    links:
+      - phpfpm
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/default.conf:/etc/nginx/conf.d/default.conf
+      - ./.logs/nginx:/var/log/nginx
+
+  phpfpm:
+    image: php:5.6-fpm
+    ports:
+      - 9000:9000
+    links:
+      - mysql
+    volumes:
+      - ./config/phpfpm.conf:/usr/local/etc/php-fpm.d/www.conf
+      - ./.logs/php:/var/log/php
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    volumes:
+      - ./.databases:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret_password
+      MYSQL_DATABASE: project1
+      MYSQL_USER: project1
+      MYSQL_PASSWORD: a123456
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8084:80
+    links:
+      - phpfpm
+      - mysql
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: secret_password
+      PMA_HOST: mysql
+      PMA_ARBITRARY: 1
