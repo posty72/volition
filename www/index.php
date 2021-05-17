@@ -7,21 +7,23 @@ include 'views/viewClass.php';
 //Include the Model Class
 include 'classes/modelClass.php';
 
-class PageSelector {
-    
-    public function run() {
-        
-        if(!$_GET['page']) {
+class PageSelector
+{
+
+    public function run()
+    {
+
+        if (!$_GET['page']) {
             $_GET['page'] = 'home';
         }
-        
+
         //Instantiate the modelClass
         $model = new Model;
-        
-        $pageInfo = $model -> getPageInfo($_GET['page']);
-        
-        switch($_GET['page']) {
-            
+
+        $pageInfo = $model->getPageInfo($_GET['page']);
+
+        switch ($_GET['page']) {
+
             case 'home':
                 include 'views/homeView.php';
                 $view = new HomeView($pageInfo, $model);
@@ -92,14 +94,12 @@ class PageSelector {
                 $view = new ErrorView($pageInfo, $model);
                 break;
         }
-        
-        echo $view -> displayPage();
-        
+
+        echo $view->displayPage();
+
     }
-    
+
 }
 
 $pageSelect = new PageSelector();
-$pageSelect -> run();
-
-?>
+$pageSelect->run();

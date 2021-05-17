@@ -1,17 +1,12 @@
+var searchText = document.getElementById("searchInput");
 
-
-var searchText = document.getElementById('searchInput');
-
-
-if(searchText.value == 'Search...') {
-    searchText.style.color = '#aaa';
+if (searchText.value == "Search...") {
+  searchText.style.color = "#aaa";
 }
 
 searchText.onfocus = function () {
-    
-    if(searchText.value == 'Search...') {
-        searchText.value = '';
-        searchText.style.color = '#000';
-    }
-    
-}
+  if (searchText.value == "Search...") {
+    searchText.value = "";
+    searchText.style.color = "#000";
+  }
+};
