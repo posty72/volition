@@ -1,0 +1,27 @@
+version: "3.2"
+
+services:
+  www:
+    build:
+      context: www
+      args:
+        DBHOST: db:3306
+        DBUSER: volition
+        DBPASS: volition
+        DBNAME: volition
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    volumes:
+      - ./www:/var/www/html
+
+  db:
+    # mysql/mysql-server is less in size than mysql
+    image: mysql/mysql-server:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root-volition
+      MYSQL_DATABASE: volition
+      MYSQL_USER: volition
+      MYSQL_PASSWORD: volition
